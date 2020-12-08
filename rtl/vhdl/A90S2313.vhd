@@ -355,8 +355,8 @@ begin
 
 	TCCR1_Sel <= '1' when IO_Addr(5 downto 1) = "10111" else '0';	-- $2E TCCR1
 	TCNT1_Sel <= '1' when IO_Addr(5 downto 1) = "10110" else '0';	-- $2C TCNT1
-	OCR1_Sel <= '1' when IO_Addr(5 downto 1) = "10101" else '0';	-- $2A OCR1
-	ICR1_Sel <= '1' when IO_Addr(5 downto 1) = "10100" else '0';	-- $24 ICR1
+	OCR1_Sel  <= '1' when IO_Addr(5 downto 1) = "10101" else '0';	-- $2A OCR1
+	ICR1_Sel  <= '1' when IO_Addr(5 downto 1) = "10010" else '0';	-- $24 ICR1
 	tc1 : AX_TC16 port map(
 			Clk => Clk,
 			Reset_n => Reset_s_n,
@@ -383,9 +383,9 @@ begin
 			Int_OC => OC_Trig,
 			Int_IC => IC_Trig);
 
-	UDR_Sel <= '1' when IO_Addr = "001100" else '0';
-	USR_Sel <= '1' when IO_Addr = "001011" else '0';
-	UCR_Sel <= '1' when IO_Addr = "001010" else '0';
+	UDR_Sel  <= '1' when IO_Addr = "001100" else '0';
+	USR_Sel  <= '1' when IO_Addr = "001011" else '0';
+	UCR_Sel  <= '1' when IO_Addr = "001010" else '0';
 	UBRR_Sel <= '1' when IO_Addr = "001001" else '0';
 	uart : AX_UART port map(
 			Clk => Clk,
@@ -408,11 +408,11 @@ begin
 			Int_TR => Int_Trig(8),
 			Int_TC => Int_Trig(9));
 
-	PINB_Sel <= '1' when IO_Addr = "010101" else '0';
-	DDRB_Sel <= '1' when IO_Addr = "010111" else '0';
+	PINB_Sel  <= '1' when IO_Addr = "010110" else '0';
+	DDRB_Sel  <= '1' when IO_Addr = "010111" else '0';
 	PORTB_Sel <= '1' when IO_Addr = "011000" else '0';
-	PIND_Sel <= '1' when IO_Addr = "010000" else '0';
-	DDRD_Sel <= '1' when IO_Addr = "010001" else '0';
+	PIND_Sel  <= '1' when IO_Addr = "010000" else '0';
+	DDRD_Sel  <= '1' when IO_Addr = "010001" else '0';
 	PORTD_Sel <= '1' when IO_Addr = "010010" else '0';
 	portb : AX_Port port map(
 			Clk => Clk,
@@ -458,9 +458,9 @@ begin
 				CRBH & "00" & CRBL when "101110",
 				TCNT1(7 downto 0) when "101100",
 				OCR(7 downto 0) when "101010",
-				IC(7 downto 0) when "101000",
-				Tmp(15 downto 8) when "101101" | "101001" | "101011",
-				Port_InB when "010101",
+				IC(7 downto 0) when "100100",
+				Tmp(15 downto 8) when "101101" | "100101" | "101011",
+				Port_InB when "010110",
 				DirB when "010111",
 				Port_OutB when "011000",
 				Port_InD when "010000",
