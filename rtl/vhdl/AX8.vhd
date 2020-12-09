@@ -181,7 +181,8 @@ architecture rtl of AX8 is
 	signal	ZJmp		: std_logic;
 	signal	RJmp		: std_logic;
 	signal	CBranch		: std_logic;
-	signal	Sleep		: std_logic;
+	signal	Sleep	    : std_logic;
+	signal  Int_Trig_s  : std_logic_vector(15 downto 1);
 
 begin
 
@@ -733,6 +734,7 @@ begin
 			CInt <= "0000";
 			Int_Acc <= (others => '0');
 			IPending <= '0';
+			Int_Trig_s <= (others => '0');
 		elsif Clk'event and Clk = '1' then
 			if Inst = "1001010110101000" then
 				WDR <= '1';
@@ -745,25 +747,26 @@ begin
 			if Int_Trig /= "000000000000000" and SREG_i(7) = '1' then
 				Sleep <= '0';
 				IPending <= '1';
+				Int_Trig_s <= Int_Trig;
 			end if;
 			Int_Acc <= (others => '0');
 			if IPending = '1' and IPush = '1' then
 				IPending <= '0';
-				if Int_Trig(1) = '1' then CInt <= "0001"; Int_Acc(1) <= '1';
-				elsif Int_Trig(2) = '1' then CInt <= "0010"; Int_Acc(2) <= '1';
-				elsif Int_Trig(3) = '1' then CInt <= "0011"; Int_Acc(3) <= '1';
-				elsif Int_Trig(4) = '1' then CInt <= "0100"; Int_Acc(4) <= '1';
-				elsif Int_Trig(5) = '1' then CInt <= "0101"; Int_Acc(5) <= '1';
-				elsif Int_Trig(6) = '1' then CInt <= "0110"; Int_Acc(6) <= '1';
-				elsif Int_Trig(7) = '1' then CInt <= "0111"; Int_Acc(7) <= '1';
-				elsif Int_Trig(8) = '1' then CInt <= "1000"; Int_Acc(8) <= '1';
-				elsif Int_Trig(9) = '1' then CInt <= "1001"; Int_Acc(9) <= '1';
-				elsif Int_Trig(10) = '1' then CInt <= "1010"; Int_Acc(10) <= '1';
-				elsif Int_Trig(11) = '1' then CInt <= "1011"; Int_Acc(11) <= '1';
-				elsif Int_Trig(12) = '1' then CInt <= "1100"; Int_Acc(12) <= '1';
-				elsif Int_Trig(13) = '1' then CInt <= "1101"; Int_Acc(13) <= '1';
-				elsif Int_Trig(14) = '1' then CInt <= "1110"; Int_Acc(14) <= '1';
-				elsif Int_Trig(15) = '1' then CInt <= "1111"; Int_Acc(15) <= '1';
+				if    Int_Trig_s(1) = '1' then CInt <= "0001"; Int_Acc(1) <= '1';
+				elsif Int_Trig_s(2) = '1' then CInt <= "0010"; Int_Acc(2) <= '1';
+				elsif Int_Trig_s(3) = '1' then CInt <= "0011"; Int_Acc(3) <= '1';
+				elsif Int_Trig_s(4) = '1' then CInt <= "0100"; Int_Acc(4) <= '1';
+				elsif Int_Trig_s(5) = '1' then CInt <= "0101"; Int_Acc(5) <= '1';
+				elsif Int_Trig_s(6) = '1' then CInt <= "0110"; Int_Acc(6) <= '1';
+				elsif Int_Trig_s(7) = '1' then CInt <= "0111"; Int_Acc(7) <= '1';
+				elsif Int_Trig_s(8) = '1' then CInt <= "1000"; Int_Acc(8) <= '1';
+				elsif Int_Trig_s(9) = '1' then CInt <= "1001"; Int_Acc(9) <= '1';
+				elsif Int_Trig_s(10) = '1' then CInt <= "1010"; Int_Acc(10) <= '1';
+				elsif Int_Trig_s(11) = '1' then CInt <= "1011"; Int_Acc(11) <= '1';
+				elsif Int_Trig_s(12) = '1' then CInt <= "1100"; Int_Acc(12) <= '1';
+				elsif Int_Trig_s(13) = '1' then CInt <= "1101"; Int_Acc(13) <= '1';
+				elsif Int_Trig_s(14) = '1' then CInt <= "1110"; Int_Acc(14) <= '1';
+				elsif Int_Trig_s(15) = '1' then CInt <= "1111"; Int_Acc(15) <= '1';
 				end if;
 			end if;
 			if Inst = "1001010100011000" then
